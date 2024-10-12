@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  book_catalog:
+    image: book-catalog:latest
+    build:
+      context: ./book_catalog
+      dockerfile: Dockerfile
+    environment:
+      - postgresql://hanuman_user:a4OxAtL6qUk8eXUdPqWw4S0RfVhGc8t7@dpg-cs2jg33tq21c73fgcqhg-a.oregon-postgres.render.com/hanuman
+    volumes:
+      - ./book_catalog:/app
+    ports:
+      - "8000:8000"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+  inventory_management:
+    image: inventory-management:latest
+    build:
+      context: ./inventory_management
+      dockerfile: Dockerfile
+    environment:
+      - postgresql://hanuman_user:a4OxAtL6qUk8eXUdPqWw4S0RfVhGc8t7@dpg-cs2jg33tq21c73fgcqhg-a.oregon-postgres.render.com/hanuman
+    volumes:
+      - ./inventory_management:/app
+    ports:
+      - "8001:8001"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8001
